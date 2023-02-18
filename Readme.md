@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
-* Студент: [Полина Лысикова](https://up.htmlacademy.ru/javascript/28/user/2208911).
-* Наставник: `Артем Рудов`.
+* Студент: [Полина Лысикова](https://htmlacademy.ru/profile/id2208911).
+* Наставник: `Артем Рудов (https://htmlacademy.ru/profile/artrudov)`.
 
 ---
 
