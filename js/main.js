@@ -88,5 +88,3 @@ function createPublishPhoto () {
 }
 
 const arrayPhotos = Array.from({length: COUNT_PUBLISH_PHOTO}, createPublishPhoto);
-
-console.log(arrayPhotos);
