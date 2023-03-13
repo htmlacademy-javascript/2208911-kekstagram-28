@@ -1,4 +1,4 @@
-import {MAX_COUNT_ID, COMMENTS_MAX_COUNT, LIKES_MIN_COUNT, LIKES_MAX_COUNT, AVATARS_MAX_COUNT, DESCRIPTIONS, MESSAGES, NAMES} from './const/const.js';
+import {MAX_COUNT_ID, COMMENTS_MAX_COUNT, LIKES_MIN_COUNT, LIKES_MAX_COUNT, AVATARS_MAX_COUNT, DESCRIPTIONS, MESSAGES, NAMES, COUNT_PUBLISH_PHOTO} from './const/const.js';
 import {getRandomInteger, getUniqueId, getRandomArrayElement} from './utils/helpers.js';
 
 // функция создает комментария под фото и его составляющих
@@ -26,8 +26,11 @@ function createPublishPhoto () {
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomInteger(LIKES_MIN_COUNT, LIKES_MAX_COUNT),
     comments,
+    COMMENTS_COUNT,
   };
 }
 
-export {createPublishPhoto};
+const arrayPhotos = () => Array.from({length: COUNT_PUBLISH_PHOTO}, createPublishPhoto);
+export {arrayPhotos};
+
 
