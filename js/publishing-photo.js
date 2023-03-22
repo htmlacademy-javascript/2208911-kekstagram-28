@@ -30,7 +30,7 @@ function createPublishPhoto () {
   };
 }
 
-const arrayPhotos = () => Array.from({length: COUNT_PUBLISH_PHOTO}, createPublishPhoto);
-export {arrayPhotos};
+const getPhotos = () => Array.from({length: COUNT_PUBLISH_PHOTO}, createPublishPhoto);
+export {getPhotos};
 
 
