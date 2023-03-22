@@ -5,11 +5,11 @@ const template = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const publishPhoto = getPhotos();
+const publishPhotos = getPhotos();
 
 const publishPhotoListFragment = document.createDocumentFragment();
 
-publishPhoto.forEach((publish) => {
+publishPhotos.forEach((publish) => {
   const templateElement = template.cloneNode(true);
   templateElement.querySelector('.picture__img').src = publish.url;
   templateElement.querySelector('.picture__likes').textContent = publish.likes;
@@ -21,4 +21,4 @@ publishPhoto.forEach((publish) => {
 
 usersPhotoList.appendChild(publishPhotoListFragment);
 
-export {publishPhoto, usersPhotoList};
+export {publishPhotos, usersPhotoList};
