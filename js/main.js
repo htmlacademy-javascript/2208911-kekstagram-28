@@ -8,13 +8,18 @@ const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
 usersPhotoList.addEventListener('click', (evt) => {
   evt.preventDefault();
+
   const child = evt.target.closest('[data-id]');
 
   if (!child) {
     return;
   }
 
-  showBigPhoto(publishPhotos, child);
+  const photo = publishPhotos.find((element) => element.id === Number(child.dataset.id));
+
+  if (photo !== undefined) {
+    showBigPhoto(photo);
+  }
 
   bigPictureCancel.addEventListener('click', () => {
     evt.preventDefault();
