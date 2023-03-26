@@ -44,6 +44,7 @@ const showBigPhoto = (photo) => {
   renderCommentPart(photo, commentsPartView);
 
   commentsLoader.addEventListener('click', () => {
+    commentsLoader.classList.remove('hidden');
     commentsPartView += COMMENTS_PART;
     renderCommentPart(photo, commentsPartView);
   });
