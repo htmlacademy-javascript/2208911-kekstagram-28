@@ -1,10 +1,14 @@
 import './photo-editing.js';
 import './sending-data.js';
 import {publishPhotos, usersPhotoList} from './viewing-photos.js';
-import {showBigPhoto, bigPicture} from './showing-big-photos.js';
+import {showBigPhoto, bigPicture, commentsLoader} from './showing-big-photos.js';
 import {isEscapeKey} from './utils/helpers.js';
 
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
+const closeBigPicture = () => {
+  bigPicture.classList.add('hidden');
+  commentsLoader.classList.remove('hidden');
+};
 
 usersPhotoList.addEventListener('click', (evt) => {
   evt.preventDefault();
@@ -23,14 +27,14 @@ usersPhotoList.addEventListener('click', (evt) => {
 
   bigPictureCancel.addEventListener('click', () => {
     evt.preventDefault();
-    bigPicture.classList.add('hidden');
+    closeBigPicture();
   });
 
   document.addEventListener('keydown', (key) => {
     key.preventDefault();
 
     if (isEscapeKey(key)) {
-      bigPicture.classList.add('hidden');
+      closeBigPicture();
     }
   });
 });

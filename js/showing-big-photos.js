@@ -15,33 +15,24 @@ const renderBigImg = (picture) => {
   bigPictureComments.innerHTML = '';
 };
 
-const renderComment = (comment) => {
-  const commentElement = bigPictureComment.cloneNode(true);
-  commentElement.querySelector('.social__picture').src = comment.avatar;
-  commentElement.querySelector('.social__picture').alt = comment.name;
-  commentElement.querySelector('.social__text').textContent = comment.message;
+const renderComment = (picture, commentsPartView) => {
+  picture.comments.slice(commentsPartView, commentsPartView + COMMENTS_PART).forEach((comment) => {
+    const commentElement = bigPictureComment.cloneNode(true);
+    commentElement.querySelector('.social__picture').src = comment.avatar;
+    commentElement.querySelector('.social__picture').alt = comment.name;
+    commentElement.querySelector('.social__text').textContent = comment.message;
 
-  bigPictureComments.appendChild(commentElement);
+    bigPictureComments.appendChild(commentElement);
+  });
 };
 
 const renderCommentPart = (picture, commentsPartView) => {
-  if ((commentsPartView + COMMENTS_PART) >= picture.COMMENTS_COUNT) {
-    commentsLoader.classList.add('hidden');
-    picture.comments.slice(commentsPartView, picture.COMMENTS_COUNT).forEach((comment) => {
-      renderComment(comment);
-    });
+  const condition = ((commentsPartView + COMMENTS_PART) >= picture.COMMENTS_COUNT);
+  const contentCommentCountContainer = condition ? `${picture.COMMENTS_COUNT} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев` : `${commentsPartView + COMMENTS_PART} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев`;
+  commentCountContainer.innerHTML = contentCommentCountContainer;
+  commentsLoader.classList.toggle(condition ? 'hidden' : undefined);
 
-    commentCountContainer.innerHTML = `${picture.COMMENTS_COUNT} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев`;
-
-  } else {
-    commentsLoader.classList.remove('hidden');
-    picture.comments.slice(commentsPartView, commentsPartView + COMMENTS_PART).forEach((comment) => {
-      renderComment(comment);
-    });
-
-    commentCountContainer.innerHTML = `${commentsPartView + COMMENTS_PART} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев`;
-  }
-
+  renderComment(picture, commentsPartView);
 };
 
 const showBigPhoto = (photo) => {
@@ -58,4 +49,4 @@ const showBigPhoto = (photo) => {
   });
 };
 
-export {showBigPhoto, bigPicture};
+export {showBigPhoto, bigPicture, commentsLoader};
