@@ -29,7 +29,8 @@ const renderComment = (picture, commentsPartView) => {
 const renderCommentPart = (picture, commentsPartView) => {
   const condition = ((commentsPartView + COMMENTS_PART) >= picture.COMMENTS_COUNT);
   const contentCommentCountContainer = condition ? `${picture.COMMENTS_COUNT} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев` : `${commentsPartView + COMMENTS_PART} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев`;
-  commentCountContainer.innerHTML = contentCommentCountContainer;
+  commentCountContainer.innerHTML = '';
+  commentCountContainer.insertAdjacentHTML('afterbegin', contentCommentCountContainer);
   commentsLoader.classList.toggle(condition ? 'hidden' : undefined);
 
   renderComment(picture, commentsPartView);

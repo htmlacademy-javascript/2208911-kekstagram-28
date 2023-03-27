@@ -5,6 +5,7 @@ import {showBigPhoto, bigPicture, commentsLoader} from './showing-big-photos.js'
 import {isEscapeKey} from './utils/helpers.js';
 
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
+
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   commentsLoader.classList.remove('hidden');
