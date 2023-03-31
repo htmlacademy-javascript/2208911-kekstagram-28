@@ -23,16 +23,13 @@ const closeImgUpload = () => {
   textDescription.value = '';
 };
 
-// функция проверки максимального кол-ва введных хэштэгов
 const lengthHashtagsValid = (hashtags) => hashtags.length <= HASHTAGS_MAX_COUNT;
 
-// функция проверки неповторяемости введеного хэштэга
 const hasNonRepeatHashtag = (hashtags) => {
   const lowerCaseHashtags = hashtags.map((tag) => tag.toLowerCase());
   return lowerCaseHashtags.length === new Set(lowerCaseHashtags).size;
 };
 
-// функция правильного написания хэштэга
 const isValidTag = (tag) => VALID_SYMBOLS.test(tag);
 
 const validateHashtags = (value) => {
