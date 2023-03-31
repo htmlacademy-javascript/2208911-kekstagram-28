@@ -12,14 +12,13 @@ const closeBigPicture = () => {
 };
 
 usersPhotoList.addEventListener('click', (evt) => {
-  evt.preventDefault();
-
   const child = evt.target.closest('[data-id]');
 
   if (!child) {
     return;
   }
 
+  evt.preventDefault();
   const photo = publishPhotos.find((element) => element.id === Number(child.dataset.id));
 
   if (photo !== undefined) {
