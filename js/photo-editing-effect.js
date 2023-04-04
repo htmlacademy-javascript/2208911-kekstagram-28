@@ -18,6 +18,7 @@ noUiSlider.create(sliderElement, {
       if (Number.isInteger(value)) {
         return value.toFixed(0);
       }
+
       return value.toFixed(1);
     },
     from: function (value) {
@@ -31,7 +32,8 @@ sliderElement.classList.add('hidden');
 effectsList.addEventListener('change', () => {
   const effectRadio = document.querySelector('.effects__radio:checked');
   imgUploadPreview.className = `effects__preview--${effectRadio.value}`;
-  if (effectRadio.value === 'none'){
+
+  if (effectRadio.value === 'none') {
     sliderElement.classList.add('hidden');
   }else {
     sliderElement.classList.remove('hidden');
@@ -48,14 +50,14 @@ effectsList.addEventListener('change', () => {
     step: settingsEffect.step,
   });
 
-  if (settingsEffect === EFFECTS[0]){
+  if (settingsEffect === EFFECTS[0]) {
     sliderElement.classList.add('hidden');
   }else {
     sliderElement.classList.remove('hidden');
   }
 
   sliderElement.noUiSlider.on('update', () => {
-    const sliderElementValue = sliderElement.noUiSlider.get(); //получение значения ползунка
+    const sliderElementValue = sliderElement.noUiSlider.get();
     imgUploadPreview.style.filter = (effectRadio.value === 'none') ? settingsEffect.style : `${settingsEffect.style}(${sliderElementValue}${settingsEffect.unit})`;
     effectLevelValue = sliderElementValue;
   });
