@@ -43,7 +43,7 @@ const validateHashtags = (value) => {
   const hashtags = value
     .trim()
     .split(' ')
-    .filter((tag) => tag.trim().length); //избавляемся от пустых элементов массива, в случае, когда будет введен двойной и более пробел
+    .filter((tag) => tag.trim().length);
   return lengthHashtagsValid(hashtags) && hasNonRepeatHashtag(hashtags) && hashtags.every(isValidTag);
 };
 

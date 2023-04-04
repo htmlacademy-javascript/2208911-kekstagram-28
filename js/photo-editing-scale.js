@@ -18,7 +18,7 @@ const changeScaleImgValue = (step, limit) => {
   if (changeValue <= SCALE_IMG_MIN || changeValue >= SCALE_IMG_MAX) {
     inputScaleImg.value = `${limit}%`;
     changeScaleImgStyle(limit);
-  } else{
+  } else {
     inputScaleImg.value = `${changeValue}%`;
     changeScaleImgStyle(changeValue);
   }
