@@ -1,5 +1,5 @@
 import {imgUploadPreview} from './photo-editing-scale.js';
-import {EFFECTS} from './const/const.js';
+import {Effect} from './const/const.js';
 
 const sliderElement = document.querySelector('.img-upload__effect-level');
 let effectLevelValue = document.querySelector('.effect-level__value');
@@ -7,11 +7,11 @@ const effectsList = document.querySelector('.effects__list');
 
 noUiSlider.create(sliderElement, {
   range: {
-    min: EFFECTS[0].min,
-    max: EFFECTS[0].max,
+    min: Effect['none'].min,
+    max: Effect['none'].max,
   },
-  start: EFFECTS[0].max,
-  step: EFFECTS[0].step,
+  start: Effect['none'].max,
+  step: Effect['none'].step,
   connect: 'lower',
   format: {
     to: function (value) {
@@ -39,7 +39,7 @@ effectsList.addEventListener('change', () => {
     sliderElement.classList.remove('hidden');
   }
 
-  const settingsEffect = EFFECTS.find((element) => element.name === effectRadio.value);
+  const settingsEffect = (Effect[effectRadio.value]);
 
   sliderElement.noUiSlider.updateOptions({
     range: {
@@ -50,7 +50,7 @@ effectsList.addEventListener('change', () => {
     step: settingsEffect.step,
   });
 
-  if (settingsEffect === EFFECTS[0]) {
+  if (settingsEffect === Effect['none']) {
     sliderElement.classList.add('hidden');
   }else {
     sliderElement.classList.remove('hidden');

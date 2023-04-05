@@ -1,5 +1,8 @@
 import {COMMENTS_PART} from './const/const.js';
-import {publishPhotos, usersPhotoList} from './viewing-photos.js';
+import {usersPhotoList} from './viewing-photos.js';
+import {getData} from './api.js';
+
+// import {publishPhotos, usersPhotoList} from './viewing-photos.js';
 import {isEscapeKey} from './utils/helpers.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -12,7 +15,7 @@ const commentsLoader = document.querySelector('.comments-loader');
 const renderBigImg = (picture) => {
   bigImg.src = picture.url;
   bigPicture.querySelector('.likes-count').textContent = picture.likes;
-  bigPicture.querySelector('.comments-count').textContent = picture.COMMENTS_COUNT;
+  bigPicture.querySelector('.comments-count').textContent = picture.comments.length;
   bigPicture.querySelector('.social__caption').textContent = picture.description;
   bigPictureComments.innerHTML = '';
 };
@@ -29,8 +32,8 @@ const renderComment = (picture, commentsPartView) => {
 };
 
 const renderCommentPart = (picture, commentsPartView) => {
-  const condition = ((commentsPartView + COMMENTS_PART) >= picture.COMMENTS_COUNT);
-  const contentCommentCountContainer = condition ? `${picture.COMMENTS_COUNT} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев` : `${commentsPartView + COMMENTS_PART} из <span class="comments-count">${picture.COMMENTS_COUNT}</span> комментариев`;
+  const condition = ((commentsPartView + COMMENTS_PART) >= picture.comments.length);
+  const contentCommentCountContainer = condition ? `${picture.comments.length} из <span class="comments-count">${picture.comments.length}</span> комментариев` : `${commentsPartView + COMMENTS_PART} из <span class="comments-count">${picture.comments.length}</span> комментариев`;
   commentCountContainer.innerHTML = '';
   commentCountContainer.insertAdjacentHTML('afterbegin', contentCommentCountContainer);
   commentsLoader.classList.toggle(condition ? 'hidden' : undefined);
@@ -60,15 +63,8 @@ const closeBigPicture = () => {
   commentsLoader.classList.remove('hidden');
 };
 
-usersPhotoList.addEventListener('click', (evt) => {
-  const child = evt.target.closest('[data-id]');
-
-  if (!child) {
-    return;
-  }
-
-  evt.preventDefault();
-  const photo = publishPhotos.find((element) => element.id === Number(child.dataset.id));
+const getBigPhoto = (evt, photos, child) => {
+  const photo = photos.find((element) => element.id === Number(child.dataset.id));
 
   if (photo !== undefined) {
     showBigPhoto(photo);
@@ -86,4 +82,19 @@ usersPhotoList.addEventListener('click', (evt) => {
       closeBigPicture();
     }
   });
+};
+
+usersPhotoList.addEventListener('click', (evt) => {
+  const child = evt.target.closest('[data-id]');
+
+  if (!child) {
+    return;
+  }
+
+  evt.preventDefault();
+
+  getData()
+    .then((photos) => {
+      getBigPhoto(evt, photos, child);
+    });
 });

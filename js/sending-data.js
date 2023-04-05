@@ -2,6 +2,7 @@ import {isEscapeKey} from './utils/helpers.js';
 import {HASHTAGS_MAX_COUNT, VALID_SYMBOLS} from './const/const.js';
 import {inputScaleImg, imgUploadPreview} from './photo-editing-scale.js';
 import {sliderElement} from './photo-editing-effect.js';
+import {sendData} from './api.js';
 
 const form = document.querySelector('.img-upload__form');
 const inputUploadFile = document.querySelector('#upload-file');
@@ -9,6 +10,46 @@ const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = imgUploadOverlay.querySelector('.img-upload__cancel');
 const textHashtags = imgUploadOverlay.querySelector('.text__hashtags');
 const textDescription = imgUploadOverlay.querySelector('.text__description');
+const templateSuccess = document.querySelector('#success')
+  .content
+  .querySelector('.success')
+  .cloneNode(true);
+
+const templateError = document.querySelector('#error')
+  .content
+  .querySelector('.error')
+  .cloneNode(true);
+
+const successButton = templateSuccess.querySelector('.success__button');
+const errorButton = templateError.querySelector('.error__button');
+
+const clickSuccessButton = () => {
+  successButton.addEventListener('click', () => {
+    templateSuccess.classList.add('hidden');
+  });
+};
+
+const clickErrorButton = () => {
+  errorButton.addEventListener('click', () => {
+    templateSuccess.classList.add('hidden');
+    templateError.classList.add('hidden');
+    imgUploadOverlay.classList.remove('hidden');
+  });
+};
+
+const clickSuccessOrErrorButton = (template) => {
+  document.addEventListener('keydown', (key) => {
+    if (isEscapeKey(key)) {
+      template.classList.add('hidden');
+    }
+  });
+
+  document.addEventListener('click', (evt) => {
+    if (evt.target.className === 'success') {
+      template.classList.add('hidden');
+    }
+  });
+};
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -27,6 +68,7 @@ const closeImgUpload = () => {
   imgUploadPreview.className = '';
   imgUploadPreview.style.filter = '';
   sliderElement.classList.add('hidden');
+  document.querySelector('#effect-none').checked = true;
 };
 
 const lengthHashtagsValid = (hashtags) => hashtags.length <= HASHTAGS_MAX_COUNT;
@@ -83,10 +125,24 @@ inputUploadFile.addEventListener('change', () => {
   });
 });
 
-form.addEventListener('submit', (evt) => {
-  if (pristine.validate()) {
-    return;
-  }
-
+form.addEventListener('submit', (evt) => { //при второй отправке одной и той же фотки ничего не происходит, видимо не всё очищается...
   evt.preventDefault();
+
+  if (pristine.validate()) {
+    const formData = new FormData(evt.target);
+
+    sendData(formData)
+      .then(() => {
+        document.body.appendChild(templateSuccess);
+        clickSuccessButton();
+        clickSuccessOrErrorButton(templateSuccess);
+        closeImgUpload();
+      })
+      .catch(() => {
+        document.body.appendChild(templateError);
+        clickErrorButton();
+        clickSuccessOrErrorButton(templateError);
+      });
+  }
 });
+
