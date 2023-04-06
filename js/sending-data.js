@@ -31,7 +31,6 @@ const clickSuccessButton = () => {
 
 const clickErrorButton = () => {
   errorButton.addEventListener('click', () => {
-    templateSuccess.classList.add('hidden');
     templateError.classList.add('hidden');
     imgUploadOverlay.classList.remove('hidden');
   });
