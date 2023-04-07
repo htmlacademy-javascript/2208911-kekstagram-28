@@ -1,5 +1,3 @@
-// import {getRandomFilter} from './filtering-published-photos.js';
-
 const usersPhotoList = document.querySelector('.pictures');
 const template = document.querySelector('#picture')
   .content
@@ -10,7 +8,6 @@ const photosList = (publishPhotos) => {
 
   publishPhotos
     .slice()
-    // .filter(getRandomFilter) //сортировка по определенному фильру
     .forEach((publish) => {
       const templateElement = template.cloneNode(true);
       templateElement.querySelector('.picture__img').src = publish.url;
@@ -29,8 +26,6 @@ const photosList = (publishPhotos) => {
   usersPhotoList.append(imgUpload);
   usersPhotoList.appendChild(publishPhotoListFragment);
 };
-
-// const photosListDuplicate = photosList(publishPhotos);
 
 export {photosList, usersPhotoList};
 
