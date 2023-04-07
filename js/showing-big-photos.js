@@ -1,8 +1,6 @@
 import {COMMENTS_PART} from './const/const.js';
 import {usersPhotoList} from './viewing-photos.js';
 import {getData} from './api.js';
-
-// import {publishPhotos, usersPhotoList} from './viewing-photos.js';
 import {isEscapeKey} from './utils/helpers.js';
 
 const bigPicture = document.querySelector('.big-picture');

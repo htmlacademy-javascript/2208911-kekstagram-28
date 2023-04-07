@@ -1,7 +1,7 @@
 import {SCALE_IMG_STEP, SCALE_IMG_MAX, SCALE_IMG_MIN} from './const/const.js';
 
-const buttonReducingScaleImg = document.querySelector('.scale__control--smaller'); // -
-const buttonIncreasingScaleImg = document.querySelector('.scale__control--bigger'); // +
+const buttonReducingScaleImg = document.querySelector('.scale__control--smaller');
+const buttonIncreasingScaleImg = document.querySelector('.scale__control--bigger');
 const inputScaleImg = document.querySelector('.scale__control--value');
 const imgUploadPreview = document.querySelector('.img-upload__preview');
 

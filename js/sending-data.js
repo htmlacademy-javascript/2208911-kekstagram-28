@@ -24,12 +24,14 @@ const successButton = templateSuccess.querySelector('.success__button');
 const errorButton = templateError.querySelector('.error__button');
 
 const clickSuccessButton = () => {
+  templateSuccess.classList.remove('hidden');
   successButton.addEventListener('click', () => {
     templateSuccess.classList.add('hidden');
   });
 };
 
 const clickErrorButton = () => {
+  templateError.classList.remove('hidden');
   errorButton.addEventListener('click', () => {
     templateError.classList.add('hidden');
     imgUploadOverlay.classList.remove('hidden');
@@ -85,6 +87,7 @@ const validateHashtags = (value) => {
     .trim()
     .split(' ')
     .filter((tag) => tag.trim().length);
+
   return lengthHashtagsValid(hashtags) && hasNonRepeatHashtag(hashtags) && hashtags.every(isValidTag);
 };
 
@@ -124,24 +127,28 @@ inputUploadFile.addEventListener('change', () => {
   });
 });
 
-form.addEventListener('submit', (evt) => { //при второй отправке одной и той же фотки ничего не происходит, видимо не всё очищается...
-  evt.preventDefault();
+const setUserFormSubmit = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
 
-  if (pristine.validate()) {
-    const formData = new FormData(evt.target);
+    if (pristine.validate()) {
+      const formData = new FormData(evt.target);
 
-    sendData(formData)
-      .then(() => {
-        document.body.appendChild(templateSuccess);
-        clickSuccessButton();
-        clickSuccessOrErrorButton(templateSuccess);
-        closeImgUpload();
-      })
-      .catch(() => {
-        document.body.appendChild(templateError);
-        clickErrorButton();
-        clickSuccessOrErrorButton(templateError);
-      });
-  }
-});
+      sendData(formData)
+        .then(() => {
+          document.body.appendChild(templateSuccess);
+          clickSuccessButton();
+          clickSuccessOrErrorButton(templateSuccess);
+          closeImgUpload();
+        })
+        .catch(() => {
+          document.body.appendChild(templateError);
+          clickErrorButton();
+          clickSuccessOrErrorButton(templateError);
+        });
+    }
+  });
+};
+
+export {setUserFormSubmit};
 

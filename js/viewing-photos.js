@@ -1,3 +1,5 @@
+// import {getRandomFilter} from './filtering-published-photos.js';
+
 const usersPhotoList = document.querySelector('.pictures');
 const template = document.querySelector('#picture')
   .content
@@ -6,18 +8,29 @@ const template = document.querySelector('#picture')
 const photosList = (publishPhotos) => {
   const publishPhotoListFragment = document.createDocumentFragment();
 
-  publishPhotos.forEach((publish) => {
-    const templateElement = template.cloneNode(true);
-    templateElement.querySelector('.picture__img').src = publish.url;
-    templateElement.querySelector('.picture__likes').textContent = publish.likes;
-    templateElement.querySelector('.picture__comments').textContent = publish.comments.length;
-    templateElement.dataset.id = publish.id;
+  publishPhotos
+    .slice()
+    // .filter(getRandomFilter) //сортировка по определенному фильру
+    .forEach((publish) => {
+      const templateElement = template.cloneNode(true);
+      templateElement.querySelector('.picture__img').src = publish.url;
+      templateElement.querySelector('.picture__likes').textContent = publish.likes;
+      templateElement.querySelector('.picture__comments').textContent = publish.comments.length;
+      templateElement.dataset.id = publish.id;
 
-    publishPhotoListFragment.appendChild(templateElement);
-  });
+      publishPhotoListFragment.appendChild(templateElement);
+    });
 
+  const picturesTitle = document.querySelector('.pictures__title');
+  const imgUpload = document.querySelector('.img-upload');
+
+  usersPhotoList.innerHTML = '';
+  usersPhotoList.append(picturesTitle);
+  usersPhotoList.append(imgUpload);
   usersPhotoList.appendChild(publishPhotoListFragment);
 };
+
+// const photosListDuplicate = photosList(publishPhotos);
 
 export {photosList, usersPhotoList};
 

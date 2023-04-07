@@ -38,19 +38,23 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const arrayIds = [];
 
 // функция нахождения случайного уникального числа
-function getUniqueId (min, max) {
-  let uniqueId = getRandomInteger(min, max);
+function getUniqueId () {
+  const arrayIds = [];
 
-  while ((arrayIds.length < (max - min + 1)) || (arrayIds.includes(uniqueId) === false)) {
-    arrayIds.push(uniqueId);
-  }
+  const getUniqueElement = (min, max) => {
+    let uniqueId = getRandomInteger(min, max);
 
-  uniqueId = getRandomInteger(min, max);
+    while ((arrayIds.length < (max - min + 1)) || (!arrayIds.includes(uniqueId))) {
+      arrayIds.push(uniqueId);
+    }
 
-  return uniqueId;
+    uniqueId = getRandomInteger(min, max);
+
+    return uniqueId;
+  };
+  return getUniqueElement(0, 25);
 }
 
 // функция нахождения рандомного элемента массива
