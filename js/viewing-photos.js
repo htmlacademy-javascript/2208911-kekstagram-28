@@ -7,7 +7,6 @@ const photosList = (publishPhotos) => {
   const publishPhotoListFragment = document.createDocumentFragment();
 
   publishPhotos
-    .slice()
     .forEach((publish) => {
       const templateElement = template.cloneNode(true);
       templateElement.querySelector('.picture__img').src = publish.url;

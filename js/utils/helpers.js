@@ -1,4 +1,4 @@
-const ALERT_SHOW_TIME = 5000;
+import {ALERT_SHOW_TIME} from '../const/const.js';
 
 const showAlert = (message, color) => {
   const alertContainer = document.createElement('div');
@@ -62,4 +62,13 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, getUniqueId, getRandomArrayElement, isEscapeKey, showAlertError, showAlertSuccess};
+// функция устранения дребезга
+function debounce (callback, timeoutDelay) {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+export {getRandomInteger, getUniqueId, getRandomArrayElement, isEscapeKey, showAlertError, showAlertSuccess, debounce};

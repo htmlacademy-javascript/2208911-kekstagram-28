@@ -1,25 +1,32 @@
 import './photo-editing-scale.js';
 import './photo-editing-effect.js';
-import {setUserFormSubmit} from './sending-data.js';
 import './showing-big-photos.js';
-import {setDefaultClick, setRandomClick, setDiscussedClick, buttonFilterDefault, buttonFilterRandom, buttonFilterDiscussed, COUNT_RANDOM_PHOTO} from './filtering-published-photos.js';
+import {setUserFormSubmit} from './sending-data.js';
+import {RENDER_DELAY} from './const/const.js';
+import {setDefaultClick, setRandomClick, setDiscussedClick, buttonFilterDefault,
+  buttonFilterRandom, buttonFilterDiscussed, COUNT_RANDOM_PHOTO} from './filtering-published-photos.js';
 import {photosList} from './viewing-photos.js';
 import {getData} from './api.js';
-import {showAlertError} from './utils/helpers.js';
+import {showAlertError, debounce} from './utils/helpers.js';
 
 getData()
   .then((photos) => {
     photosList(photos);
     document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 
-    setDefaultClick(() => photosList(photos), buttonFilterDefault);
+    setDefaultClick(debounce(() => photosList(photos.slice()), RENDER_DELAY), buttonFilterDefault);
 
-    setRandomClick(() => {
-      photosList(photos.sort(() => Math.random() - 0.5));
-      photosList(photos.slice(0, COUNT_RANDOM_PHOTO));
-    }, buttonFilterRandom);
+    setRandomClick(debounce(() =>
+      photosList(photos
+        .slice()
+        .sort(() => Math.random() - 0.5)
+        .slice(0, COUNT_RANDOM_PHOTO)),RENDER_DELAY),
+    buttonFilterRandom);
 
-    setDiscussedClick(() => photosList(photos.sort(() => {})), buttonFilterDiscussed);
+    setDiscussedClick(debounce(() => photosList(photos
+      .slice()
+      .sort((a, b) => Math.sign(b.comments.length - a.comments.length))), RENDER_DELAY),
+    buttonFilterDiscussed);
   })
   .catch((err) => showAlertError(err.message));
 
