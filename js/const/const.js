@@ -33,58 +33,52 @@ const NAMES = [
   'Марина',
 ];
 
-const EFFECTS = [
-  {
-    name: 'none',
+const Effect = {
+  'none': {
     min: 0,
     max: 100,
     step: 1,
     style: 'none',
     unit: '',
   },
-  {
-    name: 'chrome',
+  'chrome': {
     min: 0,
     max: 1,
     step: 0.1,
     style: 'grayscale',
     unit: '',
   },
-  {
-    name: 'sepia',
+  'sepia': {
     min: 0,
     max: 1,
     step: 0.1,
     style: 'sepia',
     unit: '',
   },
-  {
-    name: 'marvin',
+  'marvin': {
     min: 0,
     max: 100,
     step: 1,
     style: 'invert',
     unit: '%',
   },
-  {
-    name: 'phobos',
+  'phobos': {
     min: 0,
     max: 3,
     step: 0.1,
     style: 'blur',
     unit: 'px',
   },
-  {
-    name: 'heat',
+  'heat': {
     min: 1,
     max: 3,
     step: 0.1,
     style: 'brightness',
     unit: '',
   },
-];
+};
 
 export {COUNT_PUBLISH_PHOTO, MAX_COUNT_ID, COMMENTS_MAX_COUNT,
   LIKES_MIN_COUNT, LIKES_MAX_COUNT, AVATARS_MAX_COUNT, DESCRIPTIONS,
   MESSAGES, NAMES, COMMENTS_PART, HASHTAGS_MAX_COUNT, VALID_SYMBOLS,
-  SCALE_IMG_STEP, SCALE_IMG_MAX, SCALE_IMG_MIN, EFFECTS};
+  SCALE_IMG_STEP, SCALE_IMG_MAX, SCALE_IMG_MIN, Effect};

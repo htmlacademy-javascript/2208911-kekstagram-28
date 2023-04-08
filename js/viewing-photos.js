@@ -1,24 +1,31 @@
-import {getPhotos} from './publishing-photo.js';
-
 const usersPhotoList = document.querySelector('.pictures');
 const template = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const publishPhotos = getPhotos();
+const photosList = (publishPhotos) => {
+  const publishPhotoListFragment = document.createDocumentFragment();
 
-const publishPhotoListFragment = document.createDocumentFragment();
+  publishPhotos
+    .slice()
+    .forEach((publish) => {
+      const templateElement = template.cloneNode(true);
+      templateElement.querySelector('.picture__img').src = publish.url;
+      templateElement.querySelector('.picture__likes').textContent = publish.likes;
+      templateElement.querySelector('.picture__comments').textContent = publish.comments.length;
+      templateElement.dataset.id = publish.id;
 
-publishPhotos.forEach((publish) => {
-  const templateElement = template.cloneNode(true);
-  templateElement.querySelector('.picture__img').src = publish.url;
-  templateElement.querySelector('.picture__likes').textContent = publish.likes;
-  templateElement.querySelector('.picture__comments').textContent = publish.COMMENTS_COUNT;
-  templateElement.dataset.id = publish.id;
+      publishPhotoListFragment.appendChild(templateElement);
+    });
 
-  publishPhotoListFragment.appendChild(templateElement);
-});
+  const picturesTitle = document.querySelector('.pictures__title');
+  const imgUpload = document.querySelector('.img-upload');
 
-usersPhotoList.appendChild(publishPhotoListFragment);
+  usersPhotoList.innerHTML = '';
+  usersPhotoList.append(picturesTitle);
+  usersPhotoList.append(imgUpload);
+  usersPhotoList.appendChild(publishPhotoListFragment);
+};
 
-export {publishPhotos, usersPhotoList};
+export {photosList, usersPhotoList};
+
