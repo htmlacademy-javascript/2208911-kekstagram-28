@@ -1,6 +1,7 @@
 import './photo-editing-scale.js';
 import './photo-editing-effect.js';
 import './showing-big-photos.js';
+import './uploading-own-photo.js';
 import {setUserFormSubmit} from './sending-data.js';
 import {RENDER_DELAY} from './const/const.js';
 import {setDefaultClick, setRandomClick, setDiscussedClick, buttonFilterDefault,

@@ -66,7 +66,7 @@ const closeImgUpload = () => {
   textDescription.value = '';
   inputScaleImg.value = '100%';
   imgUploadPreview.style.transform = 'scale(1)';
-  imgUploadPreview.className = '';
+  imgUploadPreview.className = 'img-upload__preview';
   imgUploadPreview.style.filter = '';
   sliderElement.classList.add('hidden');
   document.querySelector('#effect-none').checked = true;
@@ -150,5 +150,5 @@ const setUserFormSubmit = () => {
   });
 };
 
-export {setUserFormSubmit};
+export {setUserFormSubmit, inputUploadFile};
 

@@ -31,7 +31,7 @@ sliderElement.classList.add('hidden');
 
 effectsList.addEventListener('change', () => {
   const effectRadio = document.querySelector('.effects__radio:checked');
-  imgUploadPreview.className = `effects__preview--${effectRadio.value}`;
+  imgUploadPreview.classList.add(`effects__preview--${effectRadio.value}`);
 
   if (effectRadio.value === 'none') {
     sliderElement.classList.add('hidden');
