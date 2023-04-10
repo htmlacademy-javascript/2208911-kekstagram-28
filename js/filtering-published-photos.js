@@ -1,4 +1,4 @@
-const COUNT_RANDOM_PHOTO = 10;
+import {COUNT_RANDOM_PHOTO} from './const/const.js';
 
 const buttonFilterDefault = document.querySelector('#filter-default');
 const buttonFilterRandom = document.querySelector('#filter-random');
