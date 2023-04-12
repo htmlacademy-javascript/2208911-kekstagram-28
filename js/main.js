@@ -3,9 +3,9 @@ import './photo-editing-effect.js';
 import './showing-big-photos.js';
 import './uploading-own-photo.js';
 import {setUserFormSubmit} from './sending-data.js';
-import {RENDER_DELAY} from './const/const.js';
+import {RENDER_DELAY, COUNT_RANDOM_PHOTO} from './const/const.js';
 import {setDefaultClick, setRandomClick, setDiscussedClick, buttonFilterDefault,
-  buttonFilterRandom, buttonFilterDiscussed, COUNT_RANDOM_PHOTO} from './filtering-published-photos.js';
+  buttonFilterRandom, buttonFilterDiscussed} from './filtering-published-photos.js';
 import {photosList} from './viewing-photos.js';
 import {getData} from './api.js';
 import {showAlertError, debounce} from './utils/helpers.js';

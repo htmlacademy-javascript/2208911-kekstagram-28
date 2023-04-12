@@ -10,6 +10,7 @@ const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = imgUploadOverlay.querySelector('.img-upload__cancel');
 const textHashtags = imgUploadOverlay.querySelector('.text__hashtags');
 const textDescription = imgUploadOverlay.querySelector('.text__description');
+const submitButton = imgUploadOverlay.querySelector('.img-upload__submit');
 const templateSuccess = document.querySelector('#success')
   .content
   .querySelector('.success')
@@ -127,11 +128,20 @@ inputUploadFile.addEventListener('change', () => {
   });
 });
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
 const setUserFormSubmit = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     if (pristine.validate()) {
+      blockSubmitButton();
       const formData = new FormData(evt.target);
 
       sendData(formData)
@@ -145,7 +155,8 @@ const setUserFormSubmit = () => {
           document.body.appendChild(templateError);
           clickErrorButton();
           clickSuccessOrErrorButton(templateError);
-        });
+        })
+        .finally(unblockSubmitButton);
     }
   });
 };

@@ -6,6 +6,7 @@ inputUploadFile.addEventListener('change', () => {
   const file = inputUploadFile.files[0];
   const fileName = file.name.toLowerCase();
   const coincidence = TYPES_UPLOADED_FILES.some((it) => fileName.endsWith(it));
+
   if (coincidence) {
     imgUploadPreview.querySelector('img').src = URL.createObjectURL(file);
   }
