@@ -1,5 +1,3 @@
-import {COUNT_RANDOM_PHOTO} from './const/const.js';
-
 const buttonFilterDefault = document.querySelector('#filter-default');
 const buttonFilterRandom = document.querySelector('#filter-random');
 const buttonFilterDiscussed = document.querySelector('#filter-discussed');
@@ -22,4 +20,4 @@ const setDefaultClick = (cb, button) => setButtonСlick(cb, button);
 const setRandomClick = (cb, button) => setButtonСlick(cb, button);
 const setDiscussedClick = (cb, button) => setButtonСlick(cb, button);
 
-export {setDefaultClick, setRandomClick, setDiscussedClick, buttonFilterDefault, buttonFilterRandom, buttonFilterDiscussed, COUNT_RANDOM_PHOTO};
+export {setDefaultClick, setRandomClick, setDiscussedClick, buttonFilterDefault, buttonFilterRandom, buttonFilterDiscussed};
