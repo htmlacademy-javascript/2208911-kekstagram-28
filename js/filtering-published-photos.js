@@ -1,14 +1,14 @@
-const buttonFilterDefault = document.querySelector('#filter-default');
-const buttonFilterRandom = document.querySelector('#filter-random');
-const buttonFilterDiscussed = document.querySelector('#filter-discussed');
+const filterDefaultButton = document.querySelector('#filter-default');
+const filterRandomButton = document.querySelector('#filter-random');
+const filterDiscussedButton = document.querySelector('#filter-discussed');
 
 const removeActiveButton = () => {
-  buttonFilterDefault.classList.remove('img-filters__button--active');
-  buttonFilterRandom.classList.remove('img-filters__button--active');
-  buttonFilterDiscussed.classList.remove('img-filters__button--active');
+  filterDefaultButton.classList.remove('img-filters__button--active');
+  filterRandomButton.classList.remove('img-filters__button--active');
+  filterDiscussedButton.classList.remove('img-filters__button--active');
 };
 
-const setButtonСlick = (cb, button) => {
+const setСlickButton = (cb, button) => {
   button.addEventListener('click', () => {
     removeActiveButton();
     button.classList.add('img-filters__button--active');
@@ -16,8 +16,8 @@ const setButtonСlick = (cb, button) => {
   });
 };
 
-const setDefaultClick = (cb, button) => setButtonСlick(cb, button);
-const setRandomClick = (cb, button) => setButtonСlick(cb, button);
-const setDiscussedClick = (cb, button) => setButtonСlick(cb, button);
+const setDefaultClick = (cb, button) => setСlickButton(cb, button);
+const setRandomClick = (cb, button) => setСlickButton(cb, button);
+const setDiscussedClick = (cb, button) => setСlickButton(cb, button);
 
-export {setDefaultClick, setRandomClick, setDiscussedClick, buttonFilterDefault, buttonFilterRandom, buttonFilterDiscussed};
+export {setDefaultClick, setRandomClick, setDiscussedClick, filterDefaultButton, filterRandomButton, filterDiscussedButton};

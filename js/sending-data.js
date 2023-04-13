@@ -1,16 +1,16 @@
 import {isEscapeKey} from './utils/helpers.js';
-import {HASHTAGS_MAX_COUNT, VALID_SYMBOLS} from './const/const.js';
-import {inputScaleImg, imgUploadPreview} from './photo-editing-scale.js';
+import {HASHTAGS_MAX_COUNT, COMMENT_SYMBOLS_MAX_COUNT, VALID_SYMBOLS} from './const/const.js';
+import {inputScale, uploadPreview} from './photo-editing-scale.js';
 import {sliderElement} from './photo-editing-effect.js';
 import {sendData} from './api.js';
 
 const form = document.querySelector('.img-upload__form');
 const inputUploadFile = document.querySelector('#upload-file');
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-const imgUploadCancel = imgUploadOverlay.querySelector('.img-upload__cancel');
-const textHashtags = imgUploadOverlay.querySelector('.text__hashtags');
-const textDescription = imgUploadOverlay.querySelector('.text__description');
-const submitButton = imgUploadOverlay.querySelector('.img-upload__submit');
+const uploadOverlay = document.querySelector('.img-upload__overlay');
+const uploadCancel = uploadOverlay.querySelector('.img-upload__cancel');
+const textHashtags = uploadOverlay.querySelector('.text__hashtags');
+const textDescription = uploadOverlay.querySelector('.text__description');
+const submitButton = uploadOverlay.querySelector('.img-upload__submit');
 const templateSuccess = document.querySelector('#success')
   .content
   .querySelector('.success')
@@ -25,29 +25,31 @@ const successButton = templateSuccess.querySelector('.success__button');
 const errorButton = templateError.querySelector('.error__button');
 
 const clickSuccessButton = () => {
-  templateSuccess.classList.remove('hidden');
-  successButton.addEventListener('click', () => {
-    templateSuccess.classList.add('hidden');
+  document.addEventListener('keydown', (key) => {
+    if (isEscapeKey(key)) {
+      templateSuccess.classList.add('hidden');
+    }
   });
 };
 
 const clickErrorButton = () => {
-  templateError.classList.remove('hidden');
-  errorButton.addEventListener('click', () => {
-    templateError.classList.add('hidden');
-    imgUploadOverlay.classList.remove('hidden');
+  document.addEventListener('keydown', (key) => {
+    if (isEscapeKey(key)) {
+      templateError.classList.add('hidden');
+      uploadOverlay.classList.remove('hidden');
+    }
   });
 };
 
-const clickSuccessOrErrorButton = (template) => {
-  document.addEventListener('keydown', (key) => {
-    if (isEscapeKey(key)) {
-      template.classList.add('hidden');
-    }
+const clickSuccessOrErrorButton = (button, template, className) => {
+  template.classList.remove('hidden');
+
+  button.addEventListener('click', () => {
+    template.classList.add('hidden');
   });
 
   document.addEventListener('click', (evt) => {
-    if (evt.target.className === 'success') {
+    if (evt.target.className === className) {
       template.classList.add('hidden');
     }
   });
@@ -59,21 +61,21 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper__error',
 });
 
-const closeImgUpload = () => {
-  imgUploadOverlay.classList.add('hidden');
+const closeUpload = () => {
+  uploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   inputUploadFile.value = '';
   textHashtags.value = '';
   textDescription.value = '';
-  inputScaleImg.value = '100%';
-  imgUploadPreview.style.transform = 'scale(1)';
-  imgUploadPreview.className = 'img-upload__preview';
-  imgUploadPreview.style.filter = '';
+  inputScale.value = '100%';
+  uploadPreview.style.transform = 'scale(1)';
+  uploadPreview.className = 'img-upload__preview';
+  uploadPreview.style.filter = '';
   sliderElement.classList.add('hidden');
   document.querySelector('#effect-none').checked = true;
 };
 
-const lengthHashtagsValid = (hashtags) => hashtags.length <= HASHTAGS_MAX_COUNT;
+const validateHashtagsLength = (hashtags) => hashtags.length <= HASHTAGS_MAX_COUNT;
 
 const hasNonRepeatHashtag = (hashtags) => {
   const lowerCaseHashtags = hashtags.map((tag) => tag.toLowerCase());
@@ -89,16 +91,16 @@ const validateHashtags = (value) => {
     .split(' ')
     .filter((tag) => tag.trim().length);
 
-  return lengthHashtagsValid(hashtags) && hasNonRepeatHashtag(hashtags) && hashtags.every(isValidTag);
+  return validateHashtagsLength(hashtags) && hasNonRepeatHashtag(hashtags) && hashtags.every(isValidTag);
 };
 
 function validateDescription (value) {
-  return value.length <= 140;
+  return value.length <= COMMENT_SYMBOLS_MAX_COUNT;
 }
 
 inputUploadFile.addEventListener('change', () => {
-  inputScaleImg.value = '100%';
-  imgUploadOverlay.classList.remove('hidden');
+  inputScale.value = '100%';
+  uploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   textHashtags.addEventListener('change', () => {
@@ -115,14 +117,14 @@ inputUploadFile.addEventListener('change', () => {
       'Превышено максимальное количество символов');
   });
 
-  imgUploadCancel.addEventListener('click', () => {
-    closeImgUpload();
+  uploadCancel.addEventListener('click', () => {
+    closeUpload();
   });
 
   document.addEventListener('keydown', (key) => {
     if (isEscapeKey(key)) {
       if (textHashtags !== document.activeElement && textDescription !== document.activeElement){
-        closeImgUpload();
+        closeUpload();
       }
     }
   });
@@ -148,13 +150,13 @@ const setUserFormSubmit = () => {
         .then(() => {
           document.body.appendChild(templateSuccess);
           clickSuccessButton();
-          clickSuccessOrErrorButton(templateSuccess);
-          closeImgUpload();
+          clickSuccessOrErrorButton(successButton, templateSuccess, 'success');
+          closeUpload();
         })
         .catch(() => {
           document.body.appendChild(templateError);
           clickErrorButton();
-          clickSuccessOrErrorButton(templateError);
+          clickSuccessOrErrorButton(errorButton, templateError, 'error');
         })
         .finally(unblockSubmitButton);
     }
