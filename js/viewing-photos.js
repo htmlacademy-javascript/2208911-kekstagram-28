@@ -3,7 +3,7 @@ const template = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
-const photosList = (publishPhotos) => {
+const showPhotosList = (publishPhotos) => {
   const publishPhotoListFragment = document.createDocumentFragment();
 
   publishPhotos
@@ -26,5 +26,5 @@ const photosList = (publishPhotos) => {
   usersPhotoList.appendChild(publishPhotoListFragment);
 };
 
-export {photosList, usersPhotoList};
+export {showPhotosList, usersPhotoList};
 
